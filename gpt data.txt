@@ -1,0 +1,77 @@
+Sure, let's extract the necessary data for each of the visualizations:
+
+1. **Portfolio Allocation Pie Chart**: We already have the weights of each stock in the portfolio. We just need to export these weights to a CSV file:
+
+```python
+portfolio_weights = pd.DataFrame({
+    'Stock': stocks,
+    'Weight': best_ind
+})
+portfolio_weights.to_csv('portfolio_weights.csv', index=False)
+```
+
+2. **Time Series of Portfolio Value**: To create this, we need the daily returns of the portfolio. We can calculate this by multiplying the daily log returns of each stock by its weight in the portfolio, and then summing these up:
+
+```python
+daily_portfolio_returns = (log_returns * best_ind).sum(axis=1)
+daily_portfolio_returns.to_csv('daily_portfolio_returns.csv')
+```
+
+3. **Risk-Return Scatter Plot**: We need the annual return and standard deviation of each stock. We can calculate these from the log returns:
+
+```python
+annual_returns = log_returns.mean() * 252
+annual_std_devs = log_returns.std() * np.sqrt(252)
+risk_return_data = pd.DataFrame({
+    'Stock': stocks,
+    'AnnualReturn': annual_returns,
+    'AnnualStdDev': annual_std_devs
+})
+risk_return_data.to_csv('risk_return_data.csv', index=False)
+```
+
+4. **Correlation Heatmap**: We need the correlation matrix of the stock returns:
+
+```python
+correlation_matrix = log_returns.corr()
+correlation_matrix.to_csv('correlation_matrix.csv')
+```
+
+5. **Performance Dashboard**: We already calculated the total return and standard deviation of the portfolio. We can also calculate the Sharpe ratio:
+
+```python
+risk_free_rate = 0.01  # Assume a risk-free rate of 1%
+sharpe_ratio = (portfolio_return - risk_free_rate) / portfolio_std_dev
+performance_data = pd.DataFrame({
+    'Metric': ['TotalReturn', 'StdDev', 'SharpeRatio'],
+    'Value': [portfolio_return, portfolio_std_dev, sharpe_ratio]
+})
+performance_data.to_csv('performance_data.csv', index=False)
+```
+
+6. **Comparison with Benchmarks**: We need the daily returns of the benchmark. Let's assume the S&P 500 is the benchmark:
+
+```python
+benchmark_data = yf.download('^GSPC', start="2017-01-01", end="2017-12-31")
+benchmark_log_returns = np.log(benchmark_data['Close'] / benchmark_data['Close'].shift(1))
+benchmark_log_returns.to_csv('benchmark_log_returns.csv')
+```
+
+
+
+
+Here are some additional visualizations and insights you could consider with the 2018 and 2019 data:
+
+1. **Portfolio Performance Over Time**: You could plot the cumulative returns of the portfolio over time for the years 2018 and 2019. This would allow you to see how the portfolio would have performed in those years.
+
+2. **Yearly Performance Comparison**: You could create bar charts comparing the portfolio's performance (return, risk, Sharpe ratio) in 2017, 2018, and 2019. This would allow you to see how the portfolio's performance varied from year to year.
+
+3. **Sector Performance**: If you have sector information for each stock, you could analyze the performance of each sector in 2018 and 2019. This could provide insights into which sectors were the best performers in those years.
+
+4. **Stock Performance**: You could analyze the performance of each individual stock in the portfolio in 2018 and 2019. This could provide insights into which stocks were the best and worst performers in those years.
+
+5. **Correlation Over Time**: You could analyze how the correlation between the stocks in the portfolio changed over time. This could provide insights into how the diversification benefit of the portfolio changed over time.
+
+6. **Risk-Return Tradeoff Over Time**: You could plot the risk-return scatter plot for 2018 and 2019, and compare it with the 2017 plot. This would allow you to see how the risk-return tradeoff changed over time.
+
+Remember, the key to insightful visualizations is to think about what questions you want to answer, and then design the visualizations to answer those questions.

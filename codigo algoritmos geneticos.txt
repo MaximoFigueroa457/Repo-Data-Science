@@ -1,0 +1,5 @@
+> library(quantmod)
+> symbols <- c("AAPL", "GOOG", "MSFT", "AMZN", "TSLA", "NVDA", "JPM", "JNJ", "V","BA", "MRK", "CMCSA", "CSCO", "ABBV", "CVS", "INTC", "MCD", "COST", "TMUS","BMY", "ORCL", "UNP", "MDT", "MMM", "F", "IBM", "CAT", "GE", "XOM")
+> prices <- getSymbols(symbols, auto.assign = TRUE, from = "2017-01-01", to = "2017-12-31")
+>returns <- lapply(mget(prices), dailyReturn)
+>returns_anuales <- lapply(returns, function(x) periodReturn(x, period = "yearly", type = "arithmetic"))
