@@ -414,6 +414,9 @@ total_return_df.to_csv('total_return.csv', index=False)
 annual_return_df.to_csv('annual_return.csv', index=False)
 sharpe_ratio_df.to_csv('sharpe_ratio.csv', index=False)
 
+# Normalize the cumulative returns
+
+
 # Save to CSV
 cumulative_returns_risk_taker_2017_df.to_csv('cumulative_returns_risk_taker_2017.csv', index=False)
 cumulative_returns_risk_taker_2018_df.to_csv('cumulative_returns_risk_taker_2018.csv', index=False)
